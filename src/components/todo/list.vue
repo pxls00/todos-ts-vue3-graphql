@@ -10,7 +10,10 @@ import { defineComponent } from 'vue';
 import TodoItem from '@/components/todo/item.vue'
 
 export default defineComponent({
-  name: 'TodoListComponent'
+  name: 'TodoListComponent',
+  components: {
+    TodoItem
+  }
 })
 </script>
 
