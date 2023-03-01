@@ -16,7 +16,7 @@
       <router-link :to="{name: 'todo-item', params: {
         id: props.todo.id
       }}" class="todo__item-comments"
-        >comments: <b>{{ props.todo.comments?.length }}</b></router-link
+        >{{ $t('comments') }}: <b>{{ props.todo.comments?.length }}</b></router-link
       >
     </div>
     <AppUiButton

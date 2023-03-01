@@ -1,0 +1,24 @@
+{
+  "logo": "Создатель задач",
+  "todoForm": {
+    "placeholders": {
+      "title": "Название задачи"
+    },
+    "fieldNames": {
+      "title": "Название",
+      "completed": "Завершенный"
+    }
+  },
+  "buttons": {
+    "submit": "Создать"
+  },
+  "comments": "Комментарии",
+  "themes": {
+    "light": "Светлый",
+    "dark": "Темный"
+  },
+  "locales": {
+    "ru": "Русский",
+    "en": "Английский"
+  }
+}
