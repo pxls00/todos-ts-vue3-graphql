@@ -59,6 +59,12 @@ body {
     .logo {
       color: $white;
     }
+    .todo__item-title {
+      color: $white-06;
+      &:hover {
+        color: $white;
+      }
+    }
   }
 }
 
@@ -118,6 +124,37 @@ nav {
   justify-content: space-between;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  &__line {
+    height: 30px;
+    width: 2px;
+    background: $white;
+  }
+}
+
+select.select {
+  appearance: none;
+  outline: 0;
+  background: $white-06;
+  padding: 0 0.5em;
+  height: 30px;
+  color: $black;
+  font-size: 16px;
+  font-family: $noto-sans;
+  cursor: pointer;
+  &::-ms-expand {
+    display: none;
+  }
+  position: relative;
+  display: flex;
+  width: 200px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
 .theme {
   display: flex;
   align-items: center;
@@ -171,12 +208,12 @@ nav {
       margin: 0;
       font-family: $noto-sans;
       font-size: 16px;
-      color: $white-06;
       font-weight: 400;
+      color: $black-06;
       text-decoration: none;
       transition: 0.2s all;
       &:hover {
-        color: $white;
+        color: $black;
       }
     }
     &-comments {

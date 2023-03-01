@@ -1,20 +1,27 @@
 <template>
   <label class="theme-switch" for="checkbox">
-    <input type="checkbox" v-model='value' class="theme-switch-input" id="checkbox" />
+    <input
+      type="checkbox"
+      v-model="value"
+      class="theme-switch-input"
+      id="checkbox"
+    />
     <div class="slider round"></div>
   </label>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'AppUiSwitch',
 })
 </script>
 
-<script lang='ts' setup>
-import type ThemeType from '@/interfaces/types/theme-types';
+<script lang="ts" setup>
+import { computed } from 'vue'
+
+import type ThemeType from '@/interfaces/types/theme-types'
 
 interface SwitchProps {
   theme: ThemeType
@@ -26,11 +33,11 @@ const emits = defineEmits(['changed'])
 
 const value = computed<boolean>({
   get() {
-    return props.theme === "dark" ? true : false
+    return props.theme === 'dark' ? true : false
   },
   set(newValue) {
     emits('changed', newValue ? 'dark' : 'light')
-  }
+  },
 })
 </script>
 

@@ -1,0 +1,24 @@
+{
+  "logo": "Todo Createor",
+  "todoForm": {
+    "placeholders": {
+      "title": "Title of todo"
+    },
+    "fieldNames": {
+      "title": "Name",
+      "completed": "Completed"
+    }
+  },
+  "buttons": {
+    "submit": "Submit"
+  },
+  "comments": "comments",
+  "themes": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "locales": {
+    "ru": "Russian",
+    "en": "English"
+  }
+}

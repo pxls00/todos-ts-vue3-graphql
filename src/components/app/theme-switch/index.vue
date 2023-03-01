@@ -3,13 +3,13 @@
     <span
       :class="['theme__item theme__item--light', { 'active': themeMode === 'light' }]"
       @click="setTheme('light')"
-      >Light</span
+      >{{ $t('themes.light') }}</span
     >
     <AppUiSwitch @changed="setTheme" :theme="themeMode" />
     <span
       :class="['theme__item theme__item--dark', { 'active': themeMode === 'dark' }]"
       @click="setTheme('dark')"
-      >Dark</span
+      >{{ $t('themes.dark') }}</span
     >
   </div>
 </template>
