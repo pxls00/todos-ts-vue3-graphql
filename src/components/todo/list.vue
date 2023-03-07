@@ -1,7 +1,7 @@
 <template>
   <TransitionGroup name="list" tag="ul" class="todo__list">
     <Todo
-      v-for="todo in todos"
+      v-for="todo in props.todos"
       :key="todo.id"
       :todo="todo"
       @update="updateTodo"
@@ -24,63 +24,26 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { ref } from 'vue'
 import type IdType from '@/interfaces/types/request-id'
 import type TodoItem from '@/interfaces/todo-item'
 
-const todos = reactive<TodoItem[]>([
-  {
-    title: 'Todo item 1',
-    completed: true,
-    id: 1,
-    comments: [
-      {
-        body: 'Item body comment 1',
-        id: 1,
-      },
-      {
-        body: 'Item body comment 2',
-        id: 2,
-      },
-    ],
-  },
-  {
-    title: 'Todo item 2',
-    completed: false,
-    id: 2,
-    comments: [],
-  },
-  {
-    title: 'Todo item 3',
-    completed: true,
-    id: 3,
-    comments: [
-      {
-        body: 'Item body comment 1',
-        id: 1,
-      },
-      {
-        body: 'Item body comment 2',
-        id: 2,
-      },
-      {
-        body: 'Item body comment 3',
-        id: 3,
-      },
-      {
-        body: 'Item body comment 4',
-        id: 4,
-      },
-    ],
-  },
-])
+interface TodosProps {
+  todos: TodoItem[]
+}
+
+const props = defineProps<TodosProps>()
+const emits = defineEmits<{
+  (e: 'updateTodo', todoItem: TodoItem): TodoItem,
+  (e: 'deleteTodo', id: IdType): IdType
+}>()
 
 function updateTodo(updateTodo: TodoItem): void {
-  console.log(updateTodo)
+  emits('updateTodo', updateTodo)
 }
 
 function deleteTodo(id: IdType):void {
-  console.log(id)
+  emits('deleteTodo', id)
 }
 </script>
 
