@@ -13,11 +13,6 @@
       <router-link :to="{name: 'todo-item', params: {
         id: props.todo.id
       }}" class="todo__item-title">{{ props.todo.title }}</router-link>
-      <router-link :to="{name: 'todo-item', params: {
-        id: props.todo.id
-      }}" class="todo__item-comments"
-        >{{ $t('comments') }}: <b>{{ props.todo.comments?.length }}</b></router-link
-      >
     </div>
     <AppUiButton
      :type="'button'"

@@ -34,11 +34,27 @@ export default defineComponent({
 <script lang="ts" setup>
 import { ref } from 'vue'
 
+interface NewTodo {
+  title: string,
+  completed: boolean
+}
+
 const todoValue = ref<string>('')
 
 const todoCompleted = ref<boolean>(false)
 
+const emits = defineEmits<{
+  (e: 'submit', todoItem: NewTodo): NewTodo
+}>()
+
 function submit() {
+  const newTodo: NewTodo = {
+    title: todoValue.value,
+    completed: todoCompleted.value
+  }
+  if(todoValue.value) {
+    emits('submit', newTodo)
+  }
   console.log(todoValue.value)
 }
 </script>
