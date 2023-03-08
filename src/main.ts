@@ -11,7 +11,10 @@ import i18n from './i18n'
 import '@/assets/scss/main.scss'
 
 //Custom UI components
-import ui from './components/ui'
+import ui from '@/components/ui'
+
+//Toast plugin
+import toast from '@/plugins/toast'
 
 const app = createApp(App)
 
@@ -23,5 +26,6 @@ ui.forEach(uiItem => {
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(toast)
 
 app.mount('#app')

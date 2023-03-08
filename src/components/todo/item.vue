@@ -34,7 +34,7 @@ export default defineComponent({
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import type IdType from '@/interfaces/types/request-id'
+import type IdType from '@/interfaces/types/id'
 import type TodoItem from '@/interfaces/todo-item'
 
 interface TodoItemProps {

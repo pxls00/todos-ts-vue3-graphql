@@ -29,9 +29,11 @@ export default defineComponent({
 import fetchWrapper from '@/helpers/fetch-wrapper'
 
 import type TodoItem from '@/interfaces/todo-item'
-import type IdType from '@/interfaces/types/request-id'
+import type IdType from '@/interfaces/types/id'
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, inject } from 'vue'
+
+const toast:any = inject('toast')
 
 interface NewTodo {
   title: string,
@@ -42,6 +44,7 @@ const todos = ref<any[]>([])
 
 async function fetchTodos(search: string = '') {
   try {
+    toast.waitAction()
     const getTodosQuery: string = `
       query Todos {
         todos (
@@ -68,15 +71,17 @@ async function fetchTodos(search: string = '') {
         todos: { data },
       },
     } = await fetchWrapper(getTodosQuery)
-    console.log(data)
     todos.value = data as any[]
   } catch (error) {
     console.log(error)
+  } finally {
+    toast.stopAction()
   }
 }
 
 async function onAddTodo(todoItem: NewTodo) {
   try {
+    toast.waitAction()
     const createTodoMutation: string = `
       mutation CreateTodo {
         createTodo(input: {
@@ -92,15 +97,17 @@ async function onAddTodo(todoItem: NewTodo) {
     const {
       data: { createTodo },
     } = await fetchWrapper(createTodoMutation)
-    console.log(createTodo)
     todos.value.unshift(createTodo)
   } catch (error) {
     console.log(error)
+  } finally {
+    toast.stopAction()
   }
 }
 
 async function onUpdateTodo(todoItem: TodoItem) {
   try {
+    toast.waitAction()
     const updateTodoMutation: string = `
       mutation UpdateTodo {
         updateTodo(id: ${todoItem.id}, input: {completed: ${todoItem.completed}, title: ${JSON.stringify(todoItem.title)}}) {
@@ -119,15 +126,17 @@ async function onUpdateTodo(todoItem: TodoItem) {
     if (todo) {
       todo.completed = todoItem.completed
     }
-    console.log(updateTodo)
     // todos.value = data as any[]
   } catch (error) {
     console.log(error)
+  } finally {
+    toast.stopAction()
   }
 }
 
 async function onDeleteTodo(id: IdType) {
   try {
+    toast.waitAction()
     const deleteTodoMutation: string = `
       mutation DeleteTodo {
         deleteTodo(id: ${id})
@@ -140,6 +149,8 @@ async function onDeleteTodo(id: IdType) {
     // todos.value = data as any[]
   } catch (error) {
     console.log(error)
+  } finally {
+    toast.stopAction()
   }
 }
 

@@ -55,6 +55,5 @@ function submit() {
   if(todoValue.value) {
     emits('submit', newTodo)
   }
-  console.log(todoValue.value)
 }
 </script>
