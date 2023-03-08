@@ -29,7 +29,7 @@ import type ThemeType from '@/interfaces/types/theme-types';
 const themeMode = ref<ThemeType>('light')
 
 function changeTheme(theme: ThemeType): void {
-  const body = document.querySelector('body') as HTMLElement
+  const body = document.querySelector('html') as HTMLElement
   theme === 'dark' ? body.classList.add('dark') : body.classList.remove('dark')
 }
 

@@ -1,4 +1,4 @@
-import type Id from '@/interfaces/types/request-id'
+import type Id from '@/interfaces/types/id'
 
 interface CommentItem {
   body: string

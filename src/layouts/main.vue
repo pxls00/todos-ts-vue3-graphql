@@ -1,5 +1,6 @@
 <template>
   <main>
+    <AppToast />
     <AppNavbar />
     <div class="wrapper">
       <div class="wrapper-content">

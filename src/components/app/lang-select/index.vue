@@ -24,7 +24,7 @@ const { t } = useI18n()
 
 const selectedLang = computed<localeItem>({
   get() {
-    const lang = i18nLocale.savedLocaleLanguage as localeValueType
+    const lang: localeValueType = i18nLocale.currentLocale === i18nLocale.savedLocaleLanguage ? i18nLocale.currentLocale : i18nLocale.savedLocaleLanguage
     let option = {} as localeItem
     if (lang) {
       i18nLocale.switchLanguage(lang)
@@ -33,8 +33,8 @@ const selectedLang = computed<localeItem>({
       i18nLocale.switchLanguage(i18nLocale.currentLocale)
       option = LANGUAGES.find(
         (item) => item.value === i18nLocale.currentLocale
-      ) as localeItem
-    }
+        ) as localeItem
+      }
     return option
   },
   set(newVal: localeItem) {
