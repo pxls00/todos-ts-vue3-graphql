@@ -9,8 +9,9 @@ export const useMessagesStore = defineStore('messages', () => {
 
   function newMessage(message: MessageItem): void {
     messages.value.push(message)
-    console.log(message)
-    setTimeout(() => removeMessage(message), message.duration)
+    if(message.duration) {
+      setTimeout(() => removeMessage(message), message.duration)
+    }
   }
 
   function removeMessage(message: MessageItem): void {

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <AppToast />
+    <AppMessagesHandle />
     <AppNavbar />
     <div class="wrapper">
       <div class="wrapper-content">
@@ -16,6 +16,7 @@ import { defineComponent } from 'vue'
 
 import AppNavbar from '@/components/app/navbar.vue'
 import AppFooter from '@/components/app/footer.vue'
+import AppMessagesHandle from '@/components/app/messages-handle.vue'
 
 export default defineComponent({
   name: 'DefaultLayout',
