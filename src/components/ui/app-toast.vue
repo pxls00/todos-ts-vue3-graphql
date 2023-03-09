@@ -1,23 +1,16 @@
 <template>
-  <TransitionGroup name="list" tag="ul" class="message__list">
-    <li v-if='wait' class="message__item wait">
-      <div class="lds-hourglass"></div>
-      <div class="message__item__title">
-        <p>{{ $t('wait') }}</p>
-      </div>
-    </li>
-    <li 
-      :class="[message.type, 'message__item']" 
-      v-for='message in messages' :key='message.id' >
-      <div v-if='message.type === "success"' class='message__item__tick'>&#10003;</div>
-      <div v-if='message.type === "error"' class='message__item__error'></div>
-      <div v-if='message.type === "warning"' class="message__item__warning">!</div>
-      <div class="message__item__title">
-        <p></p>
-      </div>
-      <button class="message__item__close">&times;</button>
-    </li>
-  </TransitionGroup>
+  <li 
+    :class="[props.message ? props.message?.type : 'wait', 'message__item']" 
+    >
+    <div v-if='!props.message' class="lds-hourglass"></div>
+    <div v-if='props.message?.type === "success"' class='message__item__tick'>&#10003;</div>
+    <div v-if='props.message?.type === "error"' class='message__item__error'></div>
+    <div v-if='props.message?.type === "warning"' class="message__item__warning">!</div>
+    <div class="message__item__title">
+      <p>{{ $t(props.message ? props.message?.title : 'messages.wait') }}</p>
+    </div>
+    <button v-if='props.message' class="message__item__close" @click='removeMessage(props.message)'>&times;</button>
+  </li>
 </template>
 
 <script lang="ts">
@@ -29,46 +22,22 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { useMessagesStore } from '@/stores/messages'
-import { storeToRefs } from 'pinia'
+import type Message from '@/interfaces/message-item'
 
-const store = useMessagesStore()
+interface ToastProps {
+  message?: Message,
+}
+const props = defineProps<ToastProps>()
+const emits = defineEmits<{
+  (e: 'remove', message: Message): Message
+}>()
 
-const { messages, wait } = storeToRefs(store)
+function removeMessage(message: Message | undefined):void {
+  if(message) {
+    emits('remove', message)
+  }
+}
 </script>
 
 <style lang="scss">
-.lds-hourglass {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lds-hourglass:after {
-  content: ' ';
-  display: block;
-  border-radius: 50%;
-  width: 0;
-  height: 0;
-  margin: 8px;
-  box-sizing: border-box;
-  border: 16px solid $white;
-  border-color: white transparent white transparent;
-  animation: lds-hourglass 1.2s infinite;
-}
-@keyframes lds-hourglass {
-  0% {
-    transform: rotate(0);
-    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
-  }
-  50% {
-    transform: rotate(900deg);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-  100% {
-    transform: rotate(1800deg);
-  }
-}
 </style>

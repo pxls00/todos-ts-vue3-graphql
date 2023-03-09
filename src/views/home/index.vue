@@ -79,6 +79,11 @@ async function onAddTodo(todoItem: NewTodo): Promise<void> {
     console.log(error)
   } finally {
     toast.stopAction()
+    toast.addNewMessage({
+      title: 'messages.todoCreated',
+      type: 'success',
+      duration: 2000
+    })
   }
 }
 
@@ -96,6 +101,11 @@ async function onUpdateTodo(todoItem: TodoItem): Promise<void> {
     console.log(error)
   } finally {
     toast.stopAction()
+    toast.addNewMessage({
+      title: 'messages.todoUpdated',
+      type: 'success',
+      duration: 2000
+    })
   }
 }
 
@@ -110,6 +120,11 @@ async function onDeleteTodo(id: IdType): Promise<void> {
     console.log(error)
   } finally {
     toast.stopAction()
+    toast.addNewMessage({
+      title: 'messages.todoDeleted',
+      type: 'error',
+      duration: 2000
+    })
   }
 }
 

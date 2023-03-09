@@ -21,10 +21,15 @@
     "ru": "Russian",
     "en": "English"
   },
-  "wait": "Wait please",
   "sort": {
     "all": "All",
     "completed": "Completed",
     "active": "Active"
+  },
+  "messages": {
+    "todoUpdated": "Todo has been updated",
+    "todoCreated": "Todo has been created",
+    "todoDeleted": "Todo has been deleted ",
+    "wait": "Wait please"
   }
 }
