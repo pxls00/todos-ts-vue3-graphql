@@ -46,6 +46,8 @@ const gql = inject('gql') as GqlApi
 
 const todos = ref<any[]>([])
 
+const sortOptionTodo = ref<SortOptions>()
+
 async function fetchTodos(
   sort: SortQueryOptions = { completed: 'all' },
   search: string = '',
@@ -112,10 +114,9 @@ async function onDeleteTodo(id: IdType): Promise<void> {
 }
 
 async function sortTodos(sortOption: SortOptions): Promise<void> {
-  await fetchTodos({ completed: sortOption })
+  if (sortOptionTodo.value !== sortOption) {
+    sortOptionTodo.value = sortOption
+    await fetchTodos({ completed: sortOption })
+  }
 }
-
-onMounted(async () => {
-  await fetchTodos()
-})
 </script>
