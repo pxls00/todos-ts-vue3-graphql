@@ -9,20 +9,21 @@ export default {
   install: (app: any) => {
     const store = useMessagesStore()
 
-    function addNewMessage(message: NewMessageItem): void {
+    function addNewMessage (message: NewMessageItem): void {
       const createdMessage: MessageItem = createMessage(message)
+
       store.newMessage(createdMessage)
     }
 
-    function removeMessage(message: MessageItem): void {
+    function removeMessage (message: MessageItem): void {
       store.removeMessage(message)
     }
 
-    function waitAction(): void {
+    function waitAction (): void {
       store.waitAction()
     }
 
-    function stopAction(): void {
+    function stopAction (): void {
       store.unwaitAction()
     }
 

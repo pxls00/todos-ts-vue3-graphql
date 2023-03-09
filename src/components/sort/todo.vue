@@ -1,12 +1,17 @@
 <template>
   <ul class="sort__list">
-    <li class="sort__item" v-for="sortItem in options" :key="sortItem.value">
+    <li
+      v-for="sortItem in options"
+      :key="sortItem.value"
+      class="sort__item"
+    >
       <AppUiButton
-        :type="'submit'"
+        type="submit"
         :class="['btn', { 'btn--unselected': !sortItem.active }]"
         @clicked="changeSortOption(sortItem.value)"
-        >{{ $t(`sort.${sortItem.value}`) }}</AppUiButton
       >
+        {{ $t(`sort.${sortItem.value}`) }}
+      </AppUiButton>
     </li>
   </ul>
 </template>
@@ -39,10 +44,11 @@ const options = ref<SortOption[]>(
   })
 )
 
-function changeSortOption(sortItem: SortOptions) {
+function changeSortOption (sortItem: SortOptions) {
   let optionItem = options.value.find(
     (item: SortOption): boolean => item.value === sortItem
   ) as SortOption
+
   options.value.forEach((item: SortOption) => (item.active = false))
   optionItem.active = !optionItem.active
   localStorage.setItem('sort_by', sortItem)
@@ -54,6 +60,7 @@ watch(
     const sortOption = options.value.find(
       (item: SortOption): boolean => item.active
     ) as SortOption
+
     emits('sortBy', sortOption.value)
   },
   { deep: true }
@@ -63,6 +70,7 @@ onMounted(() => {
   const sortOptionSaved = JSON.parse(
     JSON.stringify(localStorage.getItem('sort_by'))
   ) as SortOptions
+
   if (sortOptionSaved) {
     emits('sortBy', sortOptionSaved)
     changeSortOption(sortOptionSaved)

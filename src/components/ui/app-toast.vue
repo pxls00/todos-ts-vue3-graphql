@@ -1,15 +1,30 @@
 <template>
-  <li 
-    :class="[props.message ? props.message?.type : 'wait', 'message__item']" 
+  <li :class="[props.message ? props.message?.type : 'wait', 'message__item']">
+    <div v-if="!props.message" class="lds-hourglass"></div>
+    <div v-if="props.message?.type === 'success'" class="message__item__tick">
+      &#10003;
+    </div>
+    <div
+      v-if="props.message?.type === 'error'"
+      class="message__item__error"
+    ></div>
+    <div
+      v-if="props.message?.type === 'warning'"
+      class="message__item__warning"
     >
-    <div v-if='!props.message' class="lds-hourglass"></div>
-    <div v-if='props.message?.type === "success"' class='message__item__tick'>&#10003;</div>
-    <div v-if='props.message?.type === "error"' class='message__item__error'></div>
-    <div v-if='props.message?.type === "warning"' class="message__item__warning">!</div>
+      !
+    </div>
     <div class="message__item__title">
       <p>{{ $t(props.message ? props.message?.title : 'messages.wait') }}</p>
     </div>
-    <button v-if='props.message' class="message__item__close" @click='removeMessage(props.message)'>&times;</button>
+    <button
+      v-if="props.message"
+      type="button"
+      class="message__item__close"
+      @click="removeMessage(props.message)"
+    >
+      &times;
+    </button>
   </li>
 </template>
 
@@ -25,19 +40,18 @@ export default defineComponent({
 import type Message from '@/interfaces/message-item'
 
 interface ToastProps {
-  message?: Message,
+  message: Message
 }
 const props = defineProps<ToastProps>()
 const emits = defineEmits<{
   (e: 'remove', message: Message): Message
 }>()
 
-function removeMessage(message: Message | undefined):void {
-  if(message) {
+function removeMessage (message: Message | undefined): void {
+  if (message) {
     emits('remove', message)
   }
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -8,5 +8,4 @@ interface Toast {
   stopAction(): void
 }
 
-
 export default Toast

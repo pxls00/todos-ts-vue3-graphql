@@ -1,7 +1,16 @@
 <template>
-  <TransitionGroup name="list" tag="ul" class="message__list">
-    <AppToast v-if='wait'/>
-    <AppToast v-for='message in messages' :key='message.id' :message='message' @remove='removeMessage' />
+  <TransitionGroup
+    name="list"
+    tag="ul"
+    class="message__list"
+  >
+    <AppToast v-if="wait" />
+    <AppToast
+      v-for="message in messages"
+      :key="message.id"
+      :message="message"
+      @remove="removeMessage"
+    />
   </TransitionGroup>
 </template>
 
@@ -16,13 +25,13 @@ export default defineComponent({
 <script lang="ts" setup>
 import { useMessagesStore } from '@/stores/messages'
 import { storeToRefs } from 'pinia'
-import type Message from '@/interfaces/message-item';
+import type Message from '@/interfaces/message-item'
 
 const store = useMessagesStore()
 
 const { messages, wait } = storeToRefs(store)
 
-function removeMessage(message: Message):void {
+function removeMessage (message: Message): void {
   store.removeMessage(message)
 }
 </script>

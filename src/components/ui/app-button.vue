@@ -1,33 +1,35 @@
 <template>
-  <button v-bind='$attrs' :type='props.type' @click='buttonClicked'>
-    <slot />
+  <button
+    v-bind="$attrs"
+    :type="props.type"
+    @click="buttonClicked"
+  >
+    <slot></slot>
   </button>
 </template>
 
-<script lang='ts'>
-import { defineComponent } from 'vue';
+<script lang="ts">
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'AppUiButton'
+  name: 'AppUiButton',
 })
 </script>
 
-<script lang='ts' setup>
+<script lang="ts" setup>
+import type buttonTypes from '@/interfaces/types/button-types'
 
-import type buttonTypes from '@/interfaces/types/button-types';
-
-interface buttonProps{
-  type: buttonTypes,
+interface buttonProps {
+  type: buttonTypes
 }
 
 const props = withDefaults(defineProps<buttonProps>(), {
-  type: "button",
+  type: 'button',
 })
 
 const emits = defineEmits(['clicked'])
 
-function buttonClicked() {
+function buttonClicked () {
   emits('clicked')
 }
-
 </script>
