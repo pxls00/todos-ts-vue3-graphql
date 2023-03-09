@@ -15,6 +15,7 @@ import ui from '@/components/ui'
 
 //Toast plugin
 import toast from '@/plugins/toast'
+import gql from '@/plugins/gql'
 
 const app = createApp(App)
 
@@ -27,5 +28,6 @@ app.use(createPinia())
 app.use(router)
 app.use(i18n)
 app.use(toast)
+app.use(gql)
 
 app.mount('#app')
