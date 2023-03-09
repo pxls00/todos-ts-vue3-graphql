@@ -3,7 +3,7 @@
     <li v-if='wait' class="message__item wait">
       <div class="lds-hourglass"></div>
       <div class="message__item__title">
-        <p>Wait please</p>
+        <p>{{ $t('wait') }}</p>
       </div>
     </li>
     <li 
@@ -13,7 +13,7 @@
       <div v-if='message.type === "error"' class='message__item__error'></div>
       <div v-if='message.type === "warning"' class="message__item__warning">!</div>
       <div class="message__item__title">
-        <p>Wait please</p>
+        <p></p>
       </div>
       <button class="message__item__close">&times;</button>
     </li>

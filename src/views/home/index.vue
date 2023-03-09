@@ -1,8 +1,7 @@
 <template>
   <div class="home">
-    <FormTodo 
-      @submit='onAddTodo'
-    />
+    <FormTodo @submit="onAddTodo" />
+    <SortTodo @sortBy="sortTodos" />
     <TodoList
       :todos="todos"
       @updateTodo="onUpdateTodo"
@@ -15,12 +14,14 @@
 import { defineComponent } from 'vue'
 import FormTodo from '@/components/form/todo.vue'
 import TodoList from '@/components/todo/list.vue'
+import SortTodo from '@/components/sort/todo.vue'
 
 export default defineComponent({
   name: 'HomePage',
   components: {
     FormTodo,
     TodoList,
+    SortTodo,
   },
 })
 </script>
@@ -30,47 +31,33 @@ import fetchWrapper from '@/helpers/fetch-wrapper'
 
 import type TodoItem from '@/interfaces/todo-item'
 import type IdType from '@/interfaces/types/id'
+import type NewTodo from '@/interfaces/newtodo-item'
+
+import type GqlApi from '@/interfaces/graphql'
+import type Toast from '@/interfaces/toast'
+
+import type SortOptions from '@/interfaces/types/get-todos-sort-options'
+import type SortQueryOptions from '@/interfaces/get-todos-sort-argument'
 
 import { onMounted, ref, inject } from 'vue'
 
-const toast:any = inject('toast')
-
-interface NewTodo {
-  title: string,
-  completed: boolean
-}
+const toast = inject('toast') as Toast
+const gql = inject('gql') as GqlApi
 
 const todos = ref<any[]>([])
 
-async function fetchTodos(search: string = '') {
+async function fetchTodos(
+  sort: SortQueryOptions = { completed: 'all' },
+  search: string = '',
+  limit: number = 20
+): Promise<void> {
   try {
     toast.waitAction()
-    const getTodosQuery: string = `
-      query Todos {
-        todos (
-          options: {
-            slice: {
-              limit: 10
-            }
-          }
-        ) {
-          data {
-            id,
-            title,
-            completed
-            user {
-              id
-              name
-            }
-          }
-        }
-      }
-    `
     const {
       data: {
         todos: { data },
       },
-    } = await fetchWrapper(getTodosQuery)
+    } = await fetchWrapper(gql.todos.getTodos(sort, search, limit))
     todos.value = data as any[]
   } catch (error) {
     console.log(error)
@@ -79,24 +66,12 @@ async function fetchTodos(search: string = '') {
   }
 }
 
-async function onAddTodo(todoItem: NewTodo) {
+async function onAddTodo(todoItem: NewTodo): Promise<void> {
   try {
     toast.waitAction()
-    const createTodoMutation: string = `
-      mutation CreateTodo {
-        createTodo(input: {
-          title: ${JSON.stringify(todoItem.title)}
-          completed: ${JSON.stringify(todoItem.completed)}
-        }) {
-          title,
-          id,
-          completed
-        }
-      }
-    `  
     const {
       data: { createTodo },
-    } = await fetchWrapper(createTodoMutation)
+    } = await fetchWrapper(gql.todos.createTodo(todoItem))
     todos.value.unshift(createTodo)
   } catch (error) {
     console.log(error)
@@ -105,28 +80,16 @@ async function onAddTodo(todoItem: NewTodo) {
   }
 }
 
-async function onUpdateTodo(todoItem: TodoItem) {
+async function onUpdateTodo(todoItem: TodoItem): Promise<void> {
   try {
     toast.waitAction()
-    const updateTodoMutation: string = `
-      mutation UpdateTodo {
-        updateTodo(id: ${todoItem.id}, input: {completed: ${todoItem.completed}, title: ${JSON.stringify(todoItem.title)}}) {
-          id,
-          title,
-          completed
-        }
-      }
-    `
-    const {
-      data: { updateTodo },
-    } = await fetchWrapper(updateTodoMutation)
+    await fetchWrapper(gql.todos.updateTodo(todoItem))
     const todo = todos.value.find(
       (item: TodoItem): boolean => item.id === todoItem.id
     ) as TodoItem | undefined
     if (todo) {
       todo.completed = todoItem.completed
     }
-    // todos.value = data as any[]
   } catch (error) {
     console.log(error)
   } finally {
@@ -134,24 +97,22 @@ async function onUpdateTodo(todoItem: TodoItem) {
   }
 }
 
-async function onDeleteTodo(id: IdType) {
+async function onDeleteTodo(id: IdType): Promise<void> {
   try {
     toast.waitAction()
-    const deleteTodoMutation: string = `
-      mutation DeleteTodo {
-        deleteTodo(id: ${id})
-      }
-    `
-    await fetchWrapper(deleteTodoMutation)
+    await fetchWrapper(gql.todos.deleteTodo(id))
     todos.value = todos.value.filter(
       (item: TodoItem): boolean => item.id !== id
     )
-    // todos.value = data as any[]
   } catch (error) {
     console.log(error)
   } finally {
     toast.stopAction()
   }
+}
+
+async function sortTodos(sortOption: SortOptions): Promise<void> {
+  await fetchTodos({ completed: sortOption })
 }
 
 onMounted(async () => {

@@ -20,5 +20,11 @@
   "locales": {
     "ru": "Russian",
     "en": "English"
+  },
+  "wait": "Wait please",
+  "sort": {
+    "all": "All",
+    "completed": "Completed",
+    "active": "Active"
   }
 }
