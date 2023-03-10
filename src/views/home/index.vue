@@ -40,7 +40,7 @@ import type Toast from '@/interfaces/toast'
 import type SortOptions from '@/interfaces/types/get-todos-sort-options'
 import type SortQueryOptions from '@/interfaces/get-todos-sort-argument'
 
-import { onMounted, ref, inject } from 'vue'
+import { ref, inject } from 'vue'
 
 const toast = inject('toast') as Toast
 const gql = inject('gql') as GqlApi
