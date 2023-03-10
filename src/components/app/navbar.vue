@@ -16,9 +16,10 @@ import LangSelect from '@/components/app/lang-select/index.vue'
 
 export default defineComponent({
   name: 'AppNavbar',
+
   components: {
     ThemeSwitch,
-    LangSelect
-  }
+    LangSelect,
+  },
 })
 </script>

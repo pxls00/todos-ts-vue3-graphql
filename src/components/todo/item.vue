@@ -1,25 +1,37 @@
 <template>
-  <li :class="['todo__item block', {'completed': props.todo.completed}]">
-    <label :for="props.todo.id.toString()" class="checkbox__block todo__item-checkbox">
+  <li :class="['todo__item block', { completed: props.todo.completed }]">
+    <label
+      :for="props.todo.id.toString()"
+      class="checkbox__block todo__item-checkbox"
+    >
       <AppUiInput
         :id="props.todo.id"
+        v-model="complete"
         class="checkbox__block__input"
-        :type="'checkbox'"
-        v-model='complete'
+        type="checkbox"
       />
       <span class="checkbox__block__checkbox"></span>
     </label>
     <div class="todo__item-content">
-      <router-link :to="{name: 'todo-item', params: {
-        id: props.todo.id
-      }}" class="todo__item-title">{{ props.todo.title }}</router-link>
+      <router-link
+        :to="{
+          name: 'todo-item',
+          params: {
+            id: props.todo.id,
+          },
+        }"
+        class="todo__item-title"
+      >
+        {{ props.todo.title }}
+      </router-link>
     </div>
     <AppUiButton
-     :type="'button'"
-     class="todo__item-delete"
-     @click='deleteTodo'
-    >&times;</AppUiButton
+      type="button"
+      class="todo__item-delete"
+      @click="deleteTodo"
     >
+      &times;
+    </AppUiButton>
   </li>
 </template>
 
@@ -44,26 +56,26 @@ interface TodoItemProps {
 const props = defineProps<TodoItemProps>()
 
 const emits = defineEmits<{
-  (e: 'update', updateTodo: TodoItem): TodoItem,
+  (e: 'update', updateTodo: TodoItem): TodoItem
   (e: 'delete', todo: IdType): IdType
 }>()
 
 const complete = computed<boolean>({
-  get() {
+  get () {
     return props.todo.completed
   },
 
-  set(newValue: boolean) {
+  set (newValue: boolean) {
     const updatedItem = {
-      ...props.todo
+      ...props.todo,
     }
+
     updatedItem.completed = newValue
     emits('update', updatedItem)
-  }
+  },
 })
 
-function deleteTodo():void {
+function deleteTodo (): void {
   emits('delete', props.todo.id)
 }
-
 </script>

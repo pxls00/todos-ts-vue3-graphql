@@ -1,5 +1,5 @@
 interface NewTodo {
-  title: string,
+  title: string
   completed: boolean
 }
 

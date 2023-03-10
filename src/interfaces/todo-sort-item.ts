@@ -1,8 +1,7 @@
-import type SortOptions from '@/interfaces/types/get-todos-sort-options';
-import type { Ref } from 'vue'
+import type SortOptions from '@/interfaces/types/get-todos-sort-options'
 
 interface SortOption {
-  value: SortOptions,
+  value: SortOptions
   active: boolean
 }
 

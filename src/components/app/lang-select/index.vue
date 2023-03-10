@@ -23,9 +23,13 @@ import type localeValueType from '@/interfaces/types/locale-types'
 const { t } = useI18n()
 
 const selectedLang = computed<localeItem>({
-  get() {
-    const lang: localeValueType = i18nLocale.currentLocale === i18nLocale.savedLocaleLanguage ? i18nLocale.currentLocale : i18nLocale.savedLocaleLanguage
+  get () {
+    const lang: localeValueType =
+      i18nLocale.currentLocale === i18nLocale.savedLocaleLanguage
+        ? i18nLocale.currentLocale
+        : i18nLocale.savedLocaleLanguage
     let option = {} as localeItem
+
     if (lang) {
       i18nLocale.switchLanguage(lang)
       option = LANGUAGES.find((item) => item.value === lang) as localeItem
@@ -33,11 +37,12 @@ const selectedLang = computed<localeItem>({
       i18nLocale.switchLanguage(i18nLocale.currentLocale)
       option = LANGUAGES.find(
         (item) => item.value === i18nLocale.currentLocale
-        ) as localeItem
-      }
+      ) as localeItem
+    }
+
     return option
   },
-  set(newVal: localeItem) {
+  set (newVal: localeItem) {
     i18nLocale.switchLanguage(newVal.value)
   },
 })
@@ -50,6 +55,7 @@ const languages = computed<localeItem[]>(() => {
       }
     })
   }
+
   return []
 })
 </script>

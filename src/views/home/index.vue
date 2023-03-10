@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <FormTodo @submit="onAddTodo" />
-    <SortTodo @sortBy="sortTodos" />
+    <SortTodo @sort-by="sortTodos" />
     <TodoList
       :todos="todos"
-      @updateTodo="onUpdateTodo"
-      @deleteTodo="onDeleteTodo"
+      @update-todo="onUpdateTodo"
+      @delete-todo="onDeleteTodo"
     />
   </div>
 </template>
@@ -18,6 +18,7 @@ import SortTodo from '@/components/sort/todo.vue'
 
 export default defineComponent({
   name: 'HomePage',
+
   components: {
     FormTodo,
     TodoList,
@@ -39,7 +40,7 @@ import type Toast from '@/interfaces/toast'
 import type SortOptions from '@/interfaces/types/get-todos-sort-options'
 import type SortQueryOptions from '@/interfaces/get-todos-sort-argument'
 
-import { onMounted, ref, inject } from 'vue'
+import { ref, inject } from 'vue'
 
 const toast = inject('toast') as Toast
 const gql = inject('gql') as GqlApi
@@ -48,7 +49,7 @@ const todos = ref<any[]>([])
 
 const sortOptionTodo = ref<SortOptions>()
 
-async function fetchTodos(
+async function fetchTodos (
   sort: SortQueryOptions = { completed: 'all' },
   search: string = '',
   limit: number = 20
@@ -60,6 +61,7 @@ async function fetchTodos(
         todos: { data },
       },
     } = await fetchWrapper(gql.todos.getTodos(sort, search, limit))
+
     todos.value = data as any[]
   } catch (error) {
     console.log(error)
@@ -68,12 +70,13 @@ async function fetchTodos(
   }
 }
 
-async function onAddTodo(todoItem: NewTodo): Promise<void> {
+async function onAddTodo (todoItem: NewTodo): Promise<void> {
   try {
     toast.waitAction()
     const {
       data: { createTodo },
     } = await fetchWrapper(gql.todos.createTodo(todoItem))
+
     todos.value.unshift(createTodo)
   } catch (error) {
     console.log(error)
@@ -82,18 +85,19 @@ async function onAddTodo(todoItem: NewTodo): Promise<void> {
     toast.addNewMessage({
       title: 'messages.todoCreated',
       type: 'success',
-      duration: 2000
+      duration: 2000,
     })
   }
 }
 
-async function onUpdateTodo(todoItem: TodoItem): Promise<void> {
+async function onUpdateTodo (todoItem: TodoItem): Promise<void> {
   try {
     toast.waitAction()
     await fetchWrapper(gql.todos.updateTodo(todoItem))
     const todo = todos.value.find(
       (item: TodoItem): boolean => item.id === todoItem.id
     ) as TodoItem | undefined
+
     if (todo) {
       todo.completed = todoItem.completed
     }
@@ -104,12 +108,12 @@ async function onUpdateTodo(todoItem: TodoItem): Promise<void> {
     toast.addNewMessage({
       title: 'messages.todoUpdated',
       type: 'success',
-      duration: 2000
+      duration: 2000,
     })
   }
 }
 
-async function onDeleteTodo(id: IdType): Promise<void> {
+async function onDeleteTodo (id: IdType): Promise<void> {
   try {
     toast.waitAction()
     await fetchWrapper(gql.todos.deleteTodo(id))
@@ -123,12 +127,12 @@ async function onDeleteTodo(id: IdType): Promise<void> {
     toast.addNewMessage({
       title: 'messages.todoDeleted',
       type: 'error',
-      duration: 2000
+      duration: 2000,
     })
   }
 }
 
-async function sortTodos(sortOption: SortOptions): Promise<void> {
+async function sortTodos (sortOption: SortOptions): Promise<void> {
   if (sortOptionTodo.value !== sortOption) {
     sortOptionTodo.value = sortOption
     await fetchTodos({ completed: sortOption })

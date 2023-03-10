@@ -1,5 +1,9 @@
 <template>
-  <input v-bind="$attrs" v-model="value" :type="props.type" />
+  <input
+    v-bind="$attrs"
+    v-model="value"
+    :type="props.type"
+  />
 </template>
 
 <script lang="ts">
@@ -31,10 +35,10 @@ const emits = defineEmits<{
 }>()
 
 const value = computed<inputValue>({
-  get() {
+  get () {
     return props.modelValue
   },
-  set(newValue: inputValue) {
+  set (newValue: inputValue) {
     emits('update:modelValue', newValue)
   },
 })

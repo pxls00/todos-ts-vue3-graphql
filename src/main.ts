@@ -20,7 +20,7 @@ import gql from '@/plugins/gql'
 const app = createApp(App)
 
 //Global register Ui components
-ui.forEach(uiItem => {
+ui.forEach((uiItem) => {
   app.component(uiItem.name, uiItem)
 })
 

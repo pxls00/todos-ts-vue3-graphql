@@ -1,10 +1,10 @@
 <template>
   <label class="theme-switch" for="checkbox">
     <input
-      type="checkbox"
-      v-model="value"
-      class="theme-switch-input"
       id="checkbox"
+      v-model="value"
+      type="checkbox"
+      class="theme-switch-input"
     />
     <div class="slider round"></div>
   </label>
@@ -32,10 +32,10 @@ const props = defineProps<SwitchProps>()
 const emits = defineEmits(['changed'])
 
 const value = computed<boolean>({
-  get() {
+  get () {
     return props.theme === 'dark' ? true : false
   },
-  set(newValue) {
+  set (newValue) {
     emits('changed', newValue ? 'dark' : 'light')
   },
 })

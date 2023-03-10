@@ -1,5 +1,5 @@
 <template>
-  <component :is='MainLayout'>
+  <component :is="MainLayout">
     <RouterView />
   </component>
 </template>
@@ -9,5 +9,4 @@ import { RouterView } from 'vue-router'
 import MainLayout from '@/layouts/main.vue'
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

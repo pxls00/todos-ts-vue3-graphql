@@ -1,13 +1,12 @@
 import type TodosGql from '@/interfaces/graphql-todos'
 
-export default ():TodosGql => ({
-  getTodos(
-    sort = { completed: 'all' },
-    search = '',
-    limit = 10
-  ) {
+export default (): TodosGql => ({
+  getTodos (sort = { completed: 'all' }, search = '', limit = 10) {
     const searchQuery = search !== '' ? `search: {q: "${search}"}` : ''
-    const sortQuery = sort.completed === 'all' ? '' : `sort: {
+    const sortQuery =
+      sort.completed === 'all'
+        ? ''
+        : `sort: {
       field: "completed"
       order: ${sort.completed === 'active' ? 'ASC' : 'DESC'}
     }`
@@ -34,10 +33,11 @@ export default ():TodosGql => ({
         }
       }
     `
+
     return getTodosQuery
   },
 
-  createTodo(todoItem) {
+  createTodo (todoItem) {
     const createTodoMutation = `
       mutation CreateTodo {
         createTodo(input: {
@@ -49,30 +49,34 @@ export default ():TodosGql => ({
           completed
         }
       }
-    ` 
+    `
+
     return createTodoMutation
   },
 
-  deleteTodo(id) {
+  deleteTodo (id) {
     const deleteTodoMutation: string = `
       mutation DeleteTodo {
         deleteTodo(id: ${id})
       }
     `
+
     return deleteTodoMutation
   },
-  
-  updateTodo(todoItem) {
+
+  updateTodo (todoItem) {
     const updateTodoMutation: string = `
       mutation UpdateTodo {
-        updateTodo(id: ${todoItem.id}, input: {completed: ${todoItem.completed}, title: ${JSON.stringify(todoItem.title)}}) {
+        updateTodo(id: ${todoItem.id}, input: {completed: ${
+    todoItem.completed
+  }, title: ${JSON.stringify(todoItem.title)}}) {
           id,
           title,
           completed
         }
       }
     `
-    return updateTodoMutation
-  }
 
+    return updateTodoMutation
+  },
 })

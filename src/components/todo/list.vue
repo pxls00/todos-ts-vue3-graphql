@@ -1,5 +1,9 @@
 <template>
-  <TransitionGroup name="list" tag="ul" class="todo__list">
+  <TransitionGroup
+    name="list"
+    tag="ul"
+    class="todo__list"
+  >
     <Todo
       v-for="todo in props.todos"
       :key="todo.id"
@@ -17,6 +21,7 @@ import Todo from '@/components/todo/item.vue'
 
 export default defineComponent({
   name: 'TodoListComponent',
+
   components: {
     Todo,
   },
@@ -33,18 +38,17 @@ interface TodosProps {
 
 const props = defineProps<TodosProps>()
 const emits = defineEmits<{
-  (e: 'updateTodo', todoItem: TodoItem): TodoItem,
+  (e: 'updateTodo', todoItem: TodoItem): TodoItem
   (e: 'deleteTodo', id: IdType): IdType
 }>()
 
-function updateTodo(updateTodo: TodoItem): void {
+function updateTodo (updateTodo: TodoItem): void {
   emits('updateTodo', updateTodo)
 }
 
-function deleteTodo(id: IdType):void {
+function deleteTodo (id: IdType): void {
   emits('deleteTodo', id)
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

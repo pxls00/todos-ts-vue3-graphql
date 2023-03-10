@@ -4,7 +4,7 @@ import type DeleteTOdo from '@/interfaces/delete-todo-gql'
 import type UpdateTodo from '@/interfaces/update-todo-gql'
 
 interface TodosGql {
-  getTodos: GetTodos 
+  getTodos: GetTodos
   createTodo: CreateTodo
   deleteTodo: DeleteTOdo
   updateTodo: UpdateTodo
