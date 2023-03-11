@@ -18,7 +18,7 @@
           id="completed_todo"
           v-model="todoCompleted"
           class="checkbox__block__input"
-          type="'checkbox'"
+          type="checkbox"
         />
         <span class="checkbox__block__checkbox"></span>
       </label>
