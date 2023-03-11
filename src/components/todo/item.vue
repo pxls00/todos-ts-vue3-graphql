@@ -13,17 +13,12 @@
       <span class="checkbox__block__checkbox"></span>
     </label>
     <div class="todo__item-content">
-      <router-link
-        :to="{
-          name: 'todo-item',
-          params: {
-            id: props.todo.id,
-          },
-        }"
+      <a
+        href="#"
         class="todo__item-title"
       >
         {{ props.todo.title }}
-      </router-link>
+      </a>
     </div>
     <AppUiButton
       type="button"

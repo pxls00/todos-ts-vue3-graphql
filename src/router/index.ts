@@ -8,12 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: MainPage,
-    },
-    {
-      path: '/todo/:id',
-      name: 'todo-item',
-      component: () => import('@/views/todo/id.vue'),
-    },
+    }
   ],
 })
 

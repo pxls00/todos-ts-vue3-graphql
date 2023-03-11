@@ -40,7 +40,7 @@ export default defineComponent({
 import type Message from '@/interfaces/message-item'
 
 interface ToastProps {
-  message: Message
+  message?: Message
 }
 const props = defineProps<ToastProps>()
 const emits = defineEmits<{
