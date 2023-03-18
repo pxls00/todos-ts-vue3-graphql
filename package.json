@@ -8,8 +8,9 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "lintfix": "prettier --write src/ && yarn lint --fix"
+    "lint:check": "eslint src/ --ext .vue,.js,.jsx,.ts,.tsx,.cjs",
+    "lint": "eslint src/ --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "lint:fix": "prettier --write src/ && yarn lint --fix"
   },
   "dependencies": {
     "pinia": "^2.0.32",

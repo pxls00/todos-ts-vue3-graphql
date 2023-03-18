@@ -95,3 +95,5 @@ pm2.json
 cache
 
 Dockerfile
+
+.git/
