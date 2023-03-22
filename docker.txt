@@ -1,0 +1,118 @@
+Docker - texnologiya dlya sozdaniya i upravleniem konteynerami
+
+Images - obrazi (eto nekotorie orazi kotorie iz nix sozdavalis konteyneri, oni tol'ko dlya chteniya, obrazi mojno nasledovat' i sozdat' noviy image)
+
+Containers - oni zapuskaetsya na osnove image tois oni chitaet etot image i zapuskaetsya i unas prilojeniya zapuskaetsyav conteynerax
+
+Docker hub - eto tipa kak github no otlichiya v tom chto v docker hube budet zaraniya zagotovlennoe obrazi i mi mojet opublikovat' tusa svoy kustomniy obraz i poluchit' evo v lyuboy obraz ili zapuskat' konteyneri v osnove etovo imaga
+
+Dlya chevo nujen Docker - kogda u vas prilojeniya napisano na raznix yzikax i dlya tovo chtobi smotret' ves proyekt vam nujen zapuskat' vse servisi vot i kogda vi zapuskaete evo drugix opertosionnix sistemax tois vi evo razrabotali v maci hotite eovo zapustat' v windows ili ubuntu vot v etom sluche net edinovo mexanizma dlya zapuskaniya i netu edinovo mexanizmda dlya zborki toist kajdie servisi ranie
+docker eto sredsvto upakovki, dostavki, i zapuska prilojeniy 
+sredsvto upakovki - toist mi upakuem vse v nekotorie konteyner poka mi ni ponimaem chto eto takoe 
+dostavki - peredat' te konteyneri kotorie mi zapakavali i peredat'  kakimto obrazom i zapustit'
+zapusk - esli eti prilojenia zapakavali v raznix yazikax kak odin servis v pyton a drugoy v jave to zapusk eti prilojeni tochnee zapusk eti upakovnie konteyneri budet odin i tot je
+
+vse chto vi upakavali eto - docker image 
+rabotayushye prilojeniya v osnove etov imaga - docker container
+
+// DOCKER work with images
+docker images ==> smotret' sushestvuyesheye obrazi 
+
+docker build . ==> sozdat' image s docker fayla posle etovo on prinimaet put' .
+  [-t name_image:tag_image] ==> nazivat' s imenem sozdayushevo obraza ili versiya
+
+docker rmi IMAGE_ID ==> udalit' sushestvuyeshiy obraz
+
+docker image ==> controlirovat' obrazi
+  [--list, ls] smotret' vse obrazi
+  [prune] udalit' te obrazi kotorie ni ispolzuetsya
+  [rm IMAGE_ID] udalit' obraz po id
+  [tag old_name:tag new_name:tag] ==> rename image name
+  [inspect image_name] ==> more about image, dopolnitel'no o image 
+
+// DOCKER_HUB
+docker pull IMAGE_NAME ==> zapulit' kakoyto obraz iz dockerhub
+
+docker push your_dockerhub_name/image_name:image_tag ==> deploy to docker hub tois sozdat' noviy repozitorya v docker hub eto repozitorya budet kak image
+
+
+// DOCKER work with containers
+docker run IMAGE_NAME ==> zapustkat' contayner v osnove obraza
+  [-it] zayti v zapusheniy konteyner otkrit' interaktivniy konsol'
+  [-p local_port:port_in_docker_continaer]
+  [-d] detached mode zapuskat' container v detached mode tois v zadnim fone
+  [--name container_name] ==> sozdat' container with name
+  [--rm] posle ostanavleniya conteyenra srazu udalit' evo
+  [-e ENV_NAME] ==> peredat' environment i etoto enviremont ispolzuetsya v nutri szdanovo obraza
+  [--env-file url_to_env_file] ==> pod'sepit' kakoyto opredelenniy env file
+  [-v name_volume:url_volume] ==> ukazat' volyume s nazvaniyem i putyem
+docker ps ==> smotret spisok konteynerov pokazivaet te konteyneri kotorie seychas zapusheni 
+  [-a] pokazat' vse konteyneri
+  [-q] ==> smotret tol'ko id konteynerov
+
+docker rm CONTAINER_ID ==> udalit' container po id
+
+docker stop CONTAINER_ID ==> dlya ostanavlenya zapushenniy container
+
+docker start CONTAINER_ID ===> dlya zapuskaniya container kotoriy uje zapuskalsa i otalsa v istorii container
+
+docker logs container_name ==> pokazivaet na kakom portu  on zapustilsya
+
+// DOCKER work with volumes
+
+volumes ==> volumes nunjni dlya tovo chtobi ni poteryat' kakie libo dannie pri udaliniya i snova sozdaniya kakovoto konteynera tois kak u nas kakito danine zapisvaetsya v nutri fayla data.txt i mi xotim chtobi v lyubom zapushenim konteynere pri zapisa kakieta dannie i sledushiy raz kogda conteyner uje udalilsya i snova sozdalya vot togda toji oni ostalis' ni poteryalis vot
+
+docker volume ==> rabotat' s volyumami
+  [--list, ls] ==> smotret' spisok vse volyumami
+  [inspect volume_name] ==> smotret' podrobno o volyume
+  [prune] ==> udalyaet vse ni uspolzuemie volyumi
+  [rm volume_name ] ==> udalit' volyume by name or id
+  [create volume_name] ==> sozdat' volyume
+
+
+// DOCKERFILE
+Dockerfile ==> eto fayl dlya sozdaniya imaga
+
+mi mojem ispolzovat' neskol'ko imagi s pomoshyu
+FROM ==> FROM node:16.14.2-alpine mi ispolzuem v osnove nashevo obraza node
+WORKDIR ==> eto papka kotoriy mi budem rabotat' posle etovo kogda mi kopiruem i ukazvaem papku kotoriy nam nujen kopirovat' togda mi mojem ukazat' prosto tochku i docker ponimaet chto eto put' na WORKDIR
+COPY ==> prinimaet sebya pervim parametrom otkuda i kuda 
+RUN ==> chtobi zapustit; kakito komandi tipa kak npm installl ili yarn install dlya etovo est commanda i tuda pishim RUN npm install
+CMD ==> on toje nujen dlya tovo chobti zapust;ti kakito komandi no on prinimaet sebe komandi vnutri massiva  tois ['yarn', 'dev']
+
+otlichia run ot CMD zaklyuchaetsya v tom chto run zauskaetsya sobiraem i stroyim samobraz comanda cmd zapuskaetsya kajdiy raz kogda zapuskaem etot obraz ni sobiraem a imenno zapuskaem vot imenna mi pishem run chtobi kajdiy raz on ne skachal bolshiye kakito dannie kak node modules ili drugoe ni delal lishnie deystvie
+
+EXPOSE ==> on ne yavlyaetsya obezyatelnim v dockerfile no pri etom eto best praktis on otvechaet na kakom porte zapuskaetsya nash konteyner
+
+ENV ENVIRONMENT_NAME ENVIRONMENT_VALUE ==> sozdat' environment obrashat' k etomu environmentu nado ispolzovat' $ENV_NAME
+
+VOLUMES ==> sozdat' anonimnie volyumi no oni ne rabotaet esli vi ne ukazaete flag -v i tochno takuyu je put' k faylu pri sozdaniya conteynerax
+
+ENTRIPOINT ==> 
+    :--- oni oba possuti odinakvie no tol'ko cmd zapuskaet cherez shell tois tam zapuskaetsya obolochka bin ssh i vipolnyaetsya komanda a entriypoiny vipolnyaetsya bez etovo shella
+CMD ==> 
+
+kajdiy komanda kotoryi napisano v papke dockerfile ili kajdiaya koamnda kotoraya est' v obraz oni sozdayet noviy sloy
+
+
+DOCKER COMPOSE
+
+docker compose ==> eto naddstroyka nad dockeram, esli u nas trebuyetsya zapustit' kuche prilojenii, dlya tovo chtobi kajdiy raz kakie libo run porti, vot poetomu nam nujen docker compose mi ukajem docker compossu zapustit' i on tam sam razberet chto zapustit' kak zapustit.
+
+sozdayem docker-compose.yaml ==> dlya sozdaniya docker compose
+version: "" versiya
+volumes: ==> dlya sozdaniya kakie libo volyumi
+  volume_name: 
+
+services: ==> zapustit kakie servisi 
+  service1: ==> odin iz servisov dlya zapuskaniya
+    image: ==> esli uje est' sushestvyuyeshiy obraz i nujno zapustit' etot server s obraza
+    build: dockerfileroute/ ==> nujno sobrat' image iz faylda docker kotoriy lejit vnutri papki dockerfileroute
+    restart: always ==> kogda ya zapushu compose i vdrug perezagruju mashinu to posle restarta tak kak ukazana etot parametr on avtomoticheski zauskaet vse vot eti konteyneri
+    enviroment: ==> vse peremenni kotorie mne nunjni
+      --API_URL='endpoint.com'
+      --VAR1_EX='example'
+    ports: ==> ukazat' port
+      8080:8080
+
+docker-compose up ==> zapuskat' docker-compose

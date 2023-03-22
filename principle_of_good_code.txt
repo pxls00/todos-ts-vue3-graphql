@@ -1,0 +1,58 @@
+PRINCIPLES of writing good code
+
+DRY(don't repeat yourself) - kajdie dannie kotorie vxodit v sisteme doljni imet' tol'ko odno pridstavleniya, ni doljen bit' dulbirovaniya koda, v mnogix yazikax mojno sozdat' odnu mashinu kotoryu umeet rabotat' s raznimi kodami, tipa kak generic, shabloni tipa tovo.
+  SSOT(single source of thruth) - dry eshe nazivaetk kak singe sourse of thruth SSOT eto govorit edinstvenniy istochnik pravdi, on bolshe govorit o dannie, toist kak DRY- govorit bolshe pro kod, a SSOT- bolshe govorit pro dannie,
+  DRY perviy ochered on priminyaetsya dlya dikompozitsii zadach, esli vi dublarivali koda v vashem proyekte to vi ne dostatechno dikompozirovali, sdelat' element kotory dlya pereispolzovat' evo vezde s raznimi zadachami.
+  est' neskol'ko situatsii kotoriy dry ni rabotaet.1. sistema real'noe vremeni.naprimer: mnogopolzvatskie igri, kakieto vichesleni proizxodit na server i kakieto toje obyazni proyisxodit na cliente, elsi oni ni budet proizxodit' oni budet dolgo, kogda vigodno sdelat' na kliente chto to takeo kotoriy s servero pridet medlenee. 2 primer validatsiya, tois' validirovat' imya ili chto ugodno na cliente i eshe na servere chtobi bilo ocheredi kotoriy polzovatel; ni mog hacknut'
+
+
+KISS(keep it simple, stupid) - eto oznochaet chto nam nujen delat' kakoyto funksiyonal ili proyekt nujno delat' maksimal'no prosto, tak kak sprashival zakazshik tak chtobi ona delela chto xochet zakazshik
+  bezsmisleno delat' realizatsiyu slozhnoy biznes logiki, kotoriy ne budet nujno v bolshinstvo polzovateley.
+  ne stoit podklyuchat' ogromnuyu ibilioteku, esli vam ot nee nujno lish para funksii
+
+YAGNI(You aren't goona need it) - vozmojnosti kotoryie ne opsiano v trebonaie sisteme prosto ne doljo realizovtsa.
+  zakazshik ne doljen oplachivat; nenujnie emu funksii
+  razrabotchiki ne dolji prinimat;  za zakazshika
+  besplatnix funksii v programirivonae prosto ne bivaet
+
+funksiya ne doljo vernut' null - eto plaxaya praktika, prichini: 
+  obrobotka oshibok vruchnuyu
+  neodnoznachnoe ponimania
+  narusheniya mishleniya programista; nagrojdeniya koda
+  medlenniy proval, zatrudneniya podderjki sistemi
+
+
+SOLID - princibles ==> pochemu nujen solid prinsipov, oni pozvlyaet pri sablyudenii legko budet dopolyant' i rassheryat' izmeniyat' toest' podderjovat' vash kod budet leghko chitat' v vash kod leghko budet' nayti oshibki, leghko pereispolzovat',  
+  S(single responsiblity principle) - kajdiy klass doljen imet' tolko odnu prichinu dlay izmeni
+  O(open-closed principle) - vash kod dol'len bit' otkrit' k rasshireniyu, i zakrit k izmeneniyu, toist to chto uje napisano ne doljno izmenyatsa
+  L(liskov subsituation principle) - 
+  I(interface segregation princible) - mnogo interfeysov spitsal'no prednaznacheno dlya klientov luchshe chem odin interfeys odin opshevo naznacheniya dlya vsex
+  D(dependency inversion principle) - zavisimost abstraksii net zavisimosti na chto to konkertnoe abstraktnost' ne doljno zavisit' ot kontkrektnost kenkrektnost' doljno zavisit' ot abstraktnost
+
+
+
+1.SRP(single responsiblity princible) - kajdiyobyekt doljen imet' odnu obyazennost' i eto obyazennost doljen bit' incapsulirovano v class, davaite predstavitm u nas est' class DateTimteTemp i u nevo dve osnovnie klyuchi eto time i temp, kogda u nas prixodit 1 razrabotchik i sprashivaet mne nujen realizat' obyekt na temp mojesh mne dat' i on ne mojet prosto nasledovat' ili kak nibut; on ves kod skopiruet poetomu luchde delat' dve classi i s nim sozdaetsya class DateTimteTemp i vot togda kogda k vam  proxodit kakoyto razrabotchik i sprashivaet kakoyto iz nix vi smelo mojete dat' emu sprashevaemiy klass
+      nado izbavlyatsa ot antipatern GodObject, toest', kajdiy modul' ili komponent doljen otvechat' na odnu obyazennost, kod ddoljen bit' prosshe chitat' i dobavlyat' izmeneni, nado delat' kompozitsiyu esli nash komponent ili modul stalo ochen' bolshoy i neponyatniy mnogo stroki koda,
+
+2. OCP(open closed principle) - programnoe sushnosti klassi moduli i tomu podobnoe doljni bit' otkriti dlya rasshireniye no zakrito dlya izmeneniya, primer kak budet u nas kod, mi sozdaem kakoyto klass i posle etovo on budet zakritim dlya izmeneniya tochnee esli budet kakayat bug to fixim evo no ne dobavlyaem kakie libo rasshireniy na nevo vot, poetomu nam pridet sa delat' extendit evo a potom dobavit; novite metodi
+      clientski kod doljen zavisit ot interfeca kotoriy ne izmenniy, staraya lealizatsiya doljen impleementirovat' v interface, a novie realizatsiya vozmojno kakimto obrazom deligiruya vzivaniya staromu kodu ili mojet bit; nasledovatsa osnovnoy sut' eto ni nado perepisovat' clientski kod chtobi on ostavalsa takim je ne zavisimo ot takovo kakie izmeneniya vi dobavlyaete.
+      net neobxodimosti v regressii, menshe verayatnost' oshibok,
+
+
+3. LSP(liskov subsituation principle) - podklass ne doljen trebovat' otvizivaeshovo koda bolshe chem bazoviy klass, i ne doljen predostovlyat' pridastavlyat' vizivaeshomu kodu, menshe chem bazoviy klass. 
+      nasleduyemiy class doljen dopolnyat' a ne zaqmeshat' povedeniya bazovovo klassa, toest' primer u nas est' osnovnoy class database i v etom class est' metodi write, send, joinTable i mi sozdaem noviy klas nasleduya ot database klassa nazivaem evo mySql class i v etom my sql sozdaet kakie libo dannie v formate table a kogda mi xotim sozdat' noviy klass dlya mongoDb v mongo dibi vse idet po indexatsiyu toist' emu ne nujen metod joinTables pri nasledovani ot database parent klass vot poetomu nam nujen udalit' etot metod ot database, i sozdat' novie classi i nazivaem ix sqldatabse i nosqldatabase v pervom budet' metod jointables a v nosqldatabase classe ne budet' jointables a budet' joinindex vot i mi potom mojem sozdat' mysqlDatabase nasleduya ot sqldatabse a mongodb mojem ot nosqldatabse voot, v etom sluchee mi nasleduyemiy class dopolynyaet roditelniy klass a ne zameshaet kak v pervom sluchee, u nas nosqldatabase i sqldatabse oni nasleduet ot database i kak dopolnyaet etot klass u sebya i potom mi sozdayem ot nix novie klassi 
+      v sluchee komponentov nam luchshe vse dekompozirovat' i nujno sozdat' komponent kotoriy rassheryaet no ni kak ne zameshaet povedeniya iz nachal'novo componenta, toist' mi polcuaem bol'e prozrachnaya povedeniya, bol'e prozrachnuyu strukturu
+
+4. ISP(interface segregation princible) - klienti ni doljni zavisit' kotorie oni ne ispolzuet, elis kakoyto metod v interfeyse ne ispolzuetsya klientam, to izmeneniya eti metodi ne doljni prevodit' k neobxodimosti vneseniya izmeneniya klientskiy kod.
+      programnoe metodi ne doljni zavisit' ot metodov kotoriy oni ne ispolzuet, izbovlyaem programnoe sushnosti ot metodov kotorie oni ne ispolzuet, polcuaem bolee predskauemoe rabotu,  kod stanovitsa menee svyazannim      
+
+5. DIP(dependency inversion princible) - moduli verxnix urovni ne doljni zavisit'  ot moduley nijniy urovney, oba tipa moduley doljni zavisit ot abstraksii, abstraksii ne doljni zavisit ot detaley, detali ne doljni zavisit; ot abstraksii, delate kajdiy raz vizvat' klassov cherez interface.
+      
+
+
+Kakaya kodovaya baza schitaetsya xoroshey ?
+
+1. Masshtabiruemost, leghko vinostit' izmeneniya
+2. Novim lyudam leghko vniknut' v proyekt
+3. Kod doljen bit' prostim
+
