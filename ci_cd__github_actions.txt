@@ -1,0 +1,64 @@
+Github -> platforma dlya deploying opensource proyektov, kogda etot proyekt bol'shoy i v etom proyekte rabotaet komanda v etom komande mnogo uchastnikov, tochnee useri i razrabotchiki, kogda v production voznikaet kakayata problemo ili bug sozdaetsya issue issue eto taski dlya ispravleniya oshibki
+
+issue --> tasks, organization tasks,
+  minor/major ? ==> vajnosti taska 
+    minor --> nebolshie oshibki
+    major --> nujno ispravlyat' bystree bol'shie oshibki
+  is it reproducable ? ==> uroven vosproizvodimost' oshibki posle vipolneniya opredelennovo nabora shagov kotoriy ukazano v otchete oshibki
+    Always --> Фактический результат тот же после выполнения указанных шагов несколько раз
+    Intermittent --> Фактический результат меняется после многократного выполнения указанных шагов. Ошибка возникает не постоянно, несмотря на повторение одних и тех же указанных шагов. Это может быть вызвано другими факторами, такими как загрузка сервера, параллельные процессы или неизвестные изменения базы данных/кода.
+    Only once  --> Oshibka byla obnaruzhena tol'ko odin raz i bol'she nikogda ne voznikala posle popytki vosproizvesti yeye s pomoshch'yu tekh zhe shagov. Eto zadokumentirovano dlya tseley zapisi i dolzhno byt' issledovano, kogda
+  assign to a contributer ==> naznachit' task dlya uchastnika
+
+pullrequest --> zapros dlya proverki chtobi zalit' kod v production ili v master posle vipolneniya kakovot taska ili feature
+  reqview pull request --> reviewing pull reuqust code
+  is the bug fixed --> sdelano li asnavnaya sut' taska 
+  merge branch to master --> zalivat' kod v asnavnuyu vetku
+
+posle eto vsyo vam mojet nujno budet' obnovit' deploy ili obnovit' versiyu
+
+poetomu vam pridetsya vsyo eto avtomotizirovat
+
+
+
+
+ci/cd ===> raschifruetsya kak 
+  Continius Integration 
+  Continius Delivery
+
+ci/cd ===> kogda razrabativate kakoyto proyekt i vi razrabativate evo po etopno, 
+  CI(Continius Integration) ==> vi sdelali odin commit i kakoyto fichu i hotite uvidet' kak eto vglyadt na realnom prilojeniye tois s etom kak raz zanimaetsya CI(continius integration) tois kogda prodoljitelno kolichestvo vremeni on beret i integriruyet kaito chastichki koda v prilojeniya, 
+  CD(Continius Delivery) ==> potom uje kogda vi testirovali koakoyto fishku v vashem proyekte vam neobxodimo vzyat' i zalit' evo v production  etot protses toje mojno avtomotizirovat' s etim kak raz tak i zanimaetsya CD(continius delivery)
+
+github actions ==> (avtamatizatsii rabochix protsessorov razrabotchiki, ci/cd v github actions eto odin iz mnogix workflovov kotorie vi mojete avtamatizirovat' v github actions) raboutaet na asnove worklow eto is est' sam protses on reagiruet na bolshoye kolichestvo eventov kotorie opisano v githube eti sobiti mojet bit kak mi sdelali kakoyto kommit ili zalili kod ili sozdali issue ili sdleali pull request i togdali est eshe mnogo eveentov kak i eto github actions pozvolyaet realizvat'
+
+dlya odnovo repositori mojet bit neskol'ko worklowov kajdiy iz etix worklowov sostoit iz jobs (rabota) i etix robot mojet bit' mnogo vnutri odnovo workflova est' eshe vnutri kajdovo etovo joba est' shagi
+
+                            stap
+                    JOB ==> stap
+                            stap
+actions workflow => JOB ==> stap
+                            stap
+                    JOB ==> stap
+                            stap
+
+workflow.yml
+name: ==> imya workflowa kotoriy otobrajaet v liste all workflows
+events: ==> sobitie kotoriy etot workflow doljen reagirovat'
+  workflow_dispatch -- mi budem zapuskat' etot workflow v ruchnom rejime tois samostayatel'no
+
+jobs:
+  print: => eto nazvaniya joba
+    runs-on: ubuntu-latest => eto zapustit' etot job v operatsinke ubuntu
+    steps: ==> napista' kakie libo shagi
+      - name: 'step 1' nazvaniya shaga
+      run: echo Hello GH actions ==> kod kogoriy nujno zapustit' v etom shage
+      uses: ispolzuvaat' sushestvuyeshiy action
+    needs: ==> nazvaniya stepa nujen dlya popryadok
+env: ==> sozdat' enviroments
+${{ env.key }} ==> dostup k etim env peremennie
+
+actions/checkout ==> poluchit' isxodniy kod
+
+
+more about read on docs
